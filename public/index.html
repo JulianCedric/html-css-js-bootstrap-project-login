@@ -1,43 +1,187 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang='en'>
   <head>
-    <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="Web site created using create-react-app"
-    />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-    <!--
-      manifest.json provides metadata used when your web app is installed on a
-      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
-    -->
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <!--
-      Notice the use of %PUBLIC_URL% in the tags above.
-      It will be replaced with the URL of the `public` folder during the build.
-      Only files inside the `public` folder can be referenced from the HTML.
-
-      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-      work correctly both with client-side routing and a non-root public URL.
-      Learn how to configure a non-root public URL by running `npm run build`.
-    -->
-    <title>React App</title>
+    <title>Bunny Photos App</title>
+    <meta charset="'UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
   </head>
   <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
+    <div class='container-fluid'>
+      <div class='row'>
+        <!-- Login Form -->
+        <form class='login-form col-md-offset-4 col-md-4' id='loginForm' style="display: null">
+          <h1 class='text-center'>Login</h1>
+          <div class='form-group'>
+            <input class='form-control' type='text' placeholder='Username' id='username' required>
+          </div>
+          <div class='form-group'>
+            <input class='form-control' type='password' placeholder='Password' id='password' required>
+          </div>
+          <button class='btn btn-block btn-primary' type='submit'>Log in</button>
+          <hr>
+          <div>
+            <p class="text-center" id="signup">Don't have an account? <a href="#">Sign up</a></p>
+          </div>
+        </form>
+        <!-- Signup Form -->
+        <div class="signupForm" id="signupForm" style="display: none">
+          <form class='col-md-offset-4 col-md-4' id='signupForm' style='display: null'>
+            <h1 class='text-center'>Sign up</h1>
+            <div class='form-group'>
+              <input class='form-control' placeholder='Email' type='email' id='email' required>
+            </div>
+            <div class='form-group'>
+              <input class='form-control' placeholder='First Name' type='text' id='firstName' required>
+            </div>
+            <div class='form-group'>
+              <input class='form-control' placeholder='Last Name' type='text' id='lastName' required>
+            </div>
+            <div class='form-group'>
+              <input class='form-control' placeholder='Username' type='text' id='username-new' required>
+            </div>
+            <div class='form-group'>
+              <input class='form-control' placeholder='Password' type='password' id='password-new' required>
+            </div>
+            <button class='btn btn-block btn-primary' type='submit'>Sign up</button>
+            <hr>
+            <div>
+              <p class='text-center'>Have an account? <a href='#loginForm'>Log in</a></h4>
+            </div>
+          </form>
+        </div>
+        <!-- Dashboard -->
+        <div class='container.fluid'>
+          <div class='dashboard' id='dashboard' style='display: none'>
+            <h1 class='text-center'>Dashboard</h1>
+            <hr>
+            <div class="row well">
+              <div class="col-md-4">
+                <h5 class="text-center">[ bunny pic 1 ]</h5>
+                <div class="row text-center">
+                  <div class="col-md-2">
+                    <button class="btn btn-primary"><i class='fas fa-thumbs-up'> Like</i></button>
+                  </div>
+                  <div class="col-md-2">
+                    <button class="btn btn-danger"><i class='fas fa-trash'> Delete</i></button>  
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <h1 class="text-center">2</h1>
+              </div>
+              <div class="col-md-4">
+                <h1 class="text-center">3</h1>
+              </div>
+            </div>
+            <hr>
+            <div class='row'>
+              <div class='col-md-offset-4 col-md-4 text-center' id="logout">
+                <button class='btn btn-default' id='logoutButton'>Log out</button>
+              </div>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
 
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
+    <script>
+      let userData = [
+        {
+          id: 1,
+          email: null,
+          firstName: 'Lil',
+          lastName: 'JJ',
+          username: 'user1',
+          password: 'pass1'
+        },
+        {
+          id: 2,
+          email: 'user1@email.com',
+          firstName: 'Lil',
+          lastName: 'JJ',
+          username: 'user2',
+          password: 'pass2'
+        }];
+      // user logs in
+      document.getElementById('loginForm').addEventListener('submit', function(event) {
+          event.preventDefault(); 
+          let username = document.getElementById('username').value;
+          let password = document.getElementById('password').value;
+          if (username == userData[0].username && password == userData[0].password) {
+            console.log('user logged in'); 
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('dashboard').style.display = 'block';
+          } else {
+            console.log('false');
+            if (username == userData[0].username && password !== userData[0].password) {
+              console.log('user entered wrong password');
+              alert('The username or password you entered was incorrect. Please try again.');
+              document.getElementById('username').value = '';
+              document.getElementById('password').value = '';
+              document.getElementById('username').focus();
+            } else {
+              console.log('username not found');
+              alert('The username or password you entered was incorrect. Please try again.');
+              document.getElementById('username').value = '';
+              document.getElementById('password').value = '';
+              document.getElementById('username').focus();
+            }
+          };
+          console.log('Username:', username, 'Password:', password);
+      });
 
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
+        document.getElementById('logoutButton').addEventListener('click', function(event) {
+        document.getElementById('loginForm').style.display = 'block';
+        document.getElementById('dashboard').style.display = 'none';
+        console.log('user logged out');
+      });
+
+      // user clicks signup button 
+      document.getElementById('signup').addEventListener('click', function(event) {
+        console.log('user clicked signup button');
+        document.getElementById('loginForm').style.display = 'none';
+        document.getElementById('signupForm').style.display = 'block';
+      });
+      // user signs up
+      document.getElementById('signupForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        let email = document.getElementById('email').value;
+        let firstName = document.getElementById('firstName').value;
+        let lastName = document.getElementById('lastName').value;
+        let username = document.getElementById('username-new').value;
+        let password = document.getElementById('password-new').value;
+        
+        console.log('new user data added to userData:')
+        console.log('  email:', email);
+        console.log('  firstName:', firstName);
+        console.log('  lastName:', lastName);
+        console.log('  username-new:', username);
+        console.log('  password-new:', password);
+        
+        let newUserData = {
+          id: 2,
+          email: email,
+          'First Name': firstName,
+          'Last Name': lastName,
+          'Username': username,
+          'Password': password,
+        };
+
+        userData.push(newUserData);
+        document.getElementById('email').value = '';
+        document.getElementById('firstName').value = '';
+        document.getElementById('lastName').value = '';
+        document.getElementById('username-new').value = '';
+        document.getElementById('password-new').value = '';
+        document.getElementById('signupForm').style.display = 'none';        
+        document.getElementById('dashboard').style.display = 'block';
+
+        console.log("userData:", userData);
+      });
+    </script>
   </body>
 </html>
